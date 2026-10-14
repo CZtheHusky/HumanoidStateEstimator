@@ -1,0 +1,68 @@
+Class LinearKalmanFilter
+Defined in File LinearKalmanFilter.h
+
+Nested Relationships
+Nested Types
+Struct LinearKalmanFilter::Configurations
+
+Class Documentation
+class LinearKalmanFilter
+Public Types
+
+using SharedPtr = std::shared_ptr<LinearKalmanFilter>
+Public Functions
+
+explicit LinearKalmanFilter(const std::shared_ptr<LeggedModel> &leggedModel)
+virtual ~LinearKalmanFilter() = default
+inline void setConfigurations(const Configurations &configs)
+void reset()
+void updateImuProcess(scalar_t period)
+void updateContactsMeasurement(scalar_t period)
+void updatePositionMeasurement(scalar_t period, vector3_t position)
+inline void setAccelerationLocal(const vector3_t &accelerationLocal)
+inline void setContactWrenches(const std::vector<vector_t> &wrenches)
+inline vector3_t getPosition() const
+inline vector3_t getVelocityGlobal() const
+inline vector3_t getVelocityLocal() const
+Public Members
+
+const scalar_t highSuspectNumber_ = {1e-3}
+Protected Functions
+
+inline matrix3_t getRotation() const
+matrix_t getKalmanGain(matrix_t c, matrix_t r) const
+matrix_t getImuProcessNoiseCovariance(scalar_t dt) const
+virtual void updateContactProbabilities()
+Protected Attributes
+
+LeggedModel::SharedPtr leggedModel_
+size_t numContacts_
+size_t dimContacts_
+size_t numState_
+size_t dimContactObserve_
+Configurations configs_
+vector3_t accelerationLocal_
+std::vector<vector_t> contactWrenches_
+vector_t feetHeights_
+vector_t contactProbabilities_
+std::vector<vector2_t> zmps_
+matrix_t a_
+matrix_t b_
+matrix_t p_
+matrix_t cContact_
+matrix_t cPosition_
+vector_t xHat_
+struct Configurations
+Public Members
+
+scalar_t imuAccelerationNoiseDensity = 1e-2
+scalar_t imuAccelerationBiasNoiseDensity = 5e-3
+scalar_t contactProcessNoisePosition = 0.002
+scalar_t contactSensorNoisePosition = 0.002
+scalar_t contactHeightSensorNoise = 0.002
+scalar_t contactRadius = 0.
+scalar_t contactForceThreshold = 150.
+scalar_t contactForceScale = 15.
+scalar_t contactZmpLengthX = 0.08
+scalar_t contactZmpLengthY = 0.025
+scalar_t positionNoiseDensity = 1e-2

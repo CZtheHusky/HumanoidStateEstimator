@@ -1,0 +1,44 @@
+Class StateEstimator
+Defined in File StateEstimator.h
+
+Inheritance Relationships
+Base Type
+public controller_interface::ChainableControllerInterface
+
+Class Documentation
+class StateEstimator : public controller_interface::ChainableControllerInterface
+Public Types
+
+using Odom = nav_msgs::msg::Odometry
+Public Functions
+
+controller_interface::InterfaceConfiguration command_interface_configuration() const override
+controller_interface::InterfaceConfiguration state_interface_configuration() const override
+controller_interface::return_type update_and_write_commands(const rclcpp::Time &time, const rclcpp::Duration &period) override
+controller_interface::CallbackReturn on_init() override
+controller_interface::CallbackReturn on_configure(const rclcpp_lifecycle::State &previous_state) override
+controller_interface::CallbackReturn on_activate(const rclcpp_lifecycle::State &previous_state) override
+controller_interface::CallbackReturn on_deactivate(const rclcpp_lifecycle::State &previous_state) override
+std::vector<hardware_interface::StateInterface> on_export_state_interfaces() override
+inline controller_interface::return_type update_reference_from_subscribers(const rclcpp::Time &time, const rclcpp::Duration &period) override
+Public Members
+
+const std::string tfTopic_ = "/tf"
+const std::string jointTopic_ = "/joint_states"
+Protected Attributes
+
+LeggedModel::SharedPtr leggedModel_
+LeggedModel::SharedPtr *leggedModelPtr_ = &leggedModel_
+std::shared_ptr<semantic_components::JointSensors> joints_
+std::shared_ptr<semantic_components::IMUSensor> imu_
+GmObserverRos2::SharedPtr gmObserver_
+LinearKalmanFilterRos2::SharedPtr linearKalmanFilter_
+std::shared_ptr<rclcpp::Subscription<Odom>> poseSubscriber_
+realtime_tools::RealtimeThreadSafeBox<Odom> poseStamped_
+Odom poseStampedLast_
+size_t topicFrameIndex_ = 0
+quaternion_t worldToMap_ = quaternion_t::Identity()
+std::shared_ptr<rclcpp::Publisher<tf2_msgs::msg::TFMessage>> odomTfPublisher_
+std::shared_ptr<realtime_tools::RealtimePublisher<tf2_msgs::msg::TFMessage>> odomTfPublisherRealtime_
+std::shared_ptr<rclcpp::Publisher<sensor_msgs::msg::JointState>> jointStatesPublisher_
+std::shared_ptr<realtime_tools::RealtimePublisher<sensor_msgs::msg::JointState>> jointStatesPublisherRealtime_

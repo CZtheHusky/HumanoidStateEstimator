@@ -1,0 +1,22 @@
+Class GmObserver
+Defined in File GmObserver.h
+
+Class Documentation
+class GmObserver
+Public Types
+
+using SharedPtr = std::shared_ptr<GmObserver>
+Public Functions
+
+explicit GmObserver(const std::shared_ptr<LeggedModel> &leggedModel, scalar_t cutoffFrequency = 10)
+inline void setCutOffFrequency(scalar_t cutoffFrequency)
+virtual void update(scalar_t period)
+std::vector<vector_t> getContactWrenches()
+inline vector_t getBaseWrench() const
+Protected Attributes
+
+LeggedModel::SharedPtr leggedModel_
+scalar_t cutoffFrequency_
+vector_t lowPassLast_
+vector_t tauExt_
+vector_t fExt_

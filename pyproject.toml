@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "state_estimator"
+version = "0.0.1"
+description = "Humanoid State Estimator using IMU and Kinematics"
+authors = [{ name = "CZtheHusky" }]
+dependencies = ["numpy", "scipy", "pin"]
+
+[tool.setuptools.packages.find]
+include = ["state_estimator"]
